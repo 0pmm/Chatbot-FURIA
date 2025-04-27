@@ -4,25 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FURIA</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
 <body>
-    <h1>Chat da FURIA com Gemini 🔥</h1>
-    <div class="conversa">
-        <div class="mensagem-user">
-            <form method="POST">
-                <input type="text" name="message" placeholder="Manda a call..." required>
-                <button type="submit">Enviar</button>
-            </form>
-        </div>
-        
+    <div class="container">
+        <div class="conversa">
+            <img class="img" src= "{{ url_for('static', filename='assets/Furia_Esports_logo.png') }}">   
+            <h1 class="titulo">CHAT FURIA</h1>
+    
+            <div class="mensagem-user">
+                <form method="POST">
+                    <input type="text" name="message" placeholder="Manda a call..." required>
+                    <button type="submit"><i class='bx bxs-right-arrow-circle'></i></button>
+                </form>
+            </div>
+    
             {% if response %}
             <div class="mensagem-bot">
-                <!-- <img class="img" src="/templates/assets/Furia_Esports_logo.png"> -->
                 <h3>Resposta do Bot:</h3>
                 <p>{{ response }}</p>
             </div>
             {% endif %}
-    </div>
+        </div>
+    </div>    
 </body>
 </html>

@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .conversa {
+        padding: 15px;
+    }
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1c1c1c;
+    min-height: 100vh;
+}
+
+.container {
+    text-align: center;
+    background-color: transparent; /* só pra deixar claro */
+    width: 100%;
+    max-width: 500px; /* no máximo 500px, perfeito pra celular/tablet */
+    position: relative;
+    padding: 20px;
+}
+
+.img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: auto;
+    opacity: 0.1;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.conversa {
+    width: 100%;
+    min-height: 400px;
+    opacity: 0.8;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.titulo {
+    color: white;
+    padding-bottom: 10px;
+}
+
+.mensagem-user {
+    position: relative; /* Cria o contexto para posicionamento absoluto */
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    border-radius: 25px;
+    overflow: hidden;
+    border: 1px solid #ccc; /* Adiciona a borda ao container */
+    background-color: #ccc;
+  }
+  
+  .mensagem-user input {
+    flex-grow: 1;
+    padding: 10px 50px 10px 15px; /* Adiciona padding direito para o botão */
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 18px;
+  }
+  
+  .mensagem-user button {
+    position: absolute; /* Posiciona o botão absolutamente */
+    top: 50%; /* Centraliza verticalmente */
+    right: 10px; /* Distância da borda direita */
+    transform: translateY(-50%); /* Ajusta o centro vertical */
+    border: none;
+    background-color: transparent; /* Fundo transparente */
+    color: inherit;
+    cursor: pointer;
+    padding: 8px 15px; /* Ajuste o padding conforme o ícone */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .mensagem-user button:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+  
+  /* Estilos para o ícone */
+  .mensagem-user button i,
+  .mensagem-user button span,
+  .mensagem-user button svg {
+    font-size: 20px; /* Ajuste o tamanho do ícone */
+    z-index: 5; /* Garante que o ícone fique acima de outros elementos */
+  }
