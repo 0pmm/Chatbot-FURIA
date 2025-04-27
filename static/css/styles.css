@@ -10,100 +10,117 @@
     }
 }
 
-
+/* GERAL */
 * {
     margin: 0;
     padding: 0;
 }
 
 body {
-    font-family: 'Roboto', Courier, monospace;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #1c1c1c;
-    min-height: 100vh;
+  font-family: 'Roboto', Courier, monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1c1c1c;
+  min-height: 100vh;
+  position: relative;
 }
 
+
+/* MENU CONVERSA */
 .container {
-    text-align: center;
-    background-color: transparent; /* só pra deixar claro */
-    width: 100%;
-    max-width: 500px; /* no máximo 500px, perfeito pra celular/tablet */
-    position: relative;
-    padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin: 30px;
+  width: 100vh;
+  min-height: 400px;
+  opacity: 0.8;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
 }
 
 .img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70%;
-    height: auto;
-    opacity: 0.1;
-    z-index: -1;
-    pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  height: auto;
+  opacity: 0.1;
+  z-index: -1;
 }
 
-.conversa {
-    width: 100%;
-    min-height: 400px;
-    opacity: 0.8;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
+.container h1 {
+  text-align: center;
+  color: white;
 }
 
-.titulo {
-    color: white;
-    padding-bottom: 10px;
+.mensagem-bot {
+  color: white;
+  text-align: justify;
 }
-
 .mensagem-user {
-    position: relative; /* Cria o contexto para posicionamento absoluto */
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-    border-radius: 25px;
-    overflow: hidden;
-    border: 1px solid #ccc; /* Adiciona a borda ao container */
-    background-color: #ccc;
-  }
-  
-  .mensagem-user input {
-    flex-grow: 1;
-    padding: 10px 50px 10px 15px; /* Adiciona padding direito para o botão */
-    background-color: transparent;
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.mensagem-user form {
+  display: flex;
+  width: 100%;
+}
+
+.mensagem-user textarea{
+  flex: 1;
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 20px 0 0 20px;
+  background-color: #ccc;
+  border: 1px solid #ccc;
+  outline: none;
+  resize: none;
+  overflow-y: hidden;
+  box-sizing: border-box;
+}
+
+.mensagem-user button {
+  padding: 10px 20px;
+  background-color: #ccc;
+  border: none;
+  border-radius: 0 20px 20px 0;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.mensagem-user button i {
+  font-size: 24px;
+  color: #999999;
+}
+
+
+/* MENU AJUDA */
+.help-button {
+  position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: white;
     border: none;
-    outline: none;
-    font-size: 18px;
-  }
-  
-  .mensagem-user button {
-    position: absolute; /* Posiciona o botão absolutamente */
-    top: 50%; /* Centraliza verticalmente */
-    right: 10px; /* Distância da borda direita */
-    transform: translateY(-50%); /* Ajusta o centro vertical */
-    border: none;
-    background-color: transparent; /* Fundo transparente */
-    color: inherit;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
-    padding: 8px 15px; /* Ajuste o padding conforme o ícone */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .mensagem-user button:hover {
-    background-color: rgba(0, 123, 255, 0.1);
-  }
-  
-  /* Estilos para o ícone */
-  .mensagem-user button i,
-  .mensagem-user button span,
-  .mensagem-user button svg {
-    font-size: 20px; /* Ajuste o tamanho do ícone */
-    z-index: 5; /* Garante que o ícone fique acima de outros elementos */
-  }
+    text-align: center;
+}
+.help-button i {
+  font-size: 34px;
+}
+
+.help-button:hover {
+  background-color: rgba(114, 111, 111, 0.267);
+  backdrop-filter: blur(5px);
+  transition: 0.2s;
+}

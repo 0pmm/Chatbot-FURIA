@@ -10,7 +10,7 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 # Modelo com instrução
 model = genai.GenerativeModel(
     model_name="gemini-2.0-flash-lite",
-    system_instruction="Você é um chatbot divertido e fanático pela FURIA Esports. Fale como torcedor e responda com emoção e memes, se possível."
+    system_instruction="Você é um chatbot divertido da FURIA Esports e fanático por tal. Que deve servir como almanaque para o usuario, buscando o atualizar sobre jogos, feitos e dados da Equipe FURIA CSGO, de forma direta, sem textos enormes e cansativos."
 )
 
 # renderiza o html no servidor Flask
