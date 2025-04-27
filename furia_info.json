@@ -1,0 +1,31 @@
+{
+    "team_name": "FURIA",
+    "players": ["Fallen",
+                "yuurih",
+                "YEKINDAR",
+                "KSCERATO",
+                "molodoy"],
+    "titles": [
+        "Elisa Masters Espoo 2023",
+        "IEM New York 2020 - North America",
+        "ESL Pro League Season 12 - North America",
+        "Dreamhack Masters Spring 2020 - North America"
+    ],
+    "coach": "Sid Macedo, famoso sidde",
+    "last5-matches": [
+        "Perdeu para o 0 MongolZ por 2x0",
+        "Perdeu para Virtus.pro por 2x0",
+        "Perdeu para o Complexidade por 1x2",
+        "Ganhou do Betclic por 2x0",
+        "Perdeu para a M80 por 2x1"
+    ],
+    "history": "A FURIA Esports foi fundada em 2017 e rapidamente se destacou no cenário internacional de CS:GO, com um estilo de jogo agressivo e inovador.",
+    "tmaps": "1355",
+    "twins": "806",
+    "tdraws": "2",
+    "tlosses": "547",
+    "tkilss":"116894",
+    "tdeaths": "109262",
+    "trouds":"34181",
+    "kd":"1.07"
+}
