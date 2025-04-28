@@ -29,7 +29,7 @@ body {
 
 /* MENU CONVERSA */
 .container {
-  display: flex;
+  display: none;
   justify-content: space-between;
   flex-direction: column;
   margin: 30px;
@@ -100,27 +100,53 @@ body {
   font-size: 24px;
   color: #999999;
 }
+.container.hovered {
+  display: flex;
+  background-color: #1c1c1c;
+  color: white;
+  backdrop-filter: blur(5px);
+  transition: opacity 2s ease;
+}
 
 
 /* MENU AJUDA */
-.help-button {
-  position: absolute;
+.bot-button {
+  display: none;
+  position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: white;
     border: none;
-    border-radius: 50%;
-    width: 50px;
+    border-radius: 30px;
+    width: 160px;
     height: 50px;
-    cursor: pointer;
-    text-align: center;
+    cursor: default;
+    transition: opacity 0.5s ease;
 }
-.help-button i {
-  font-size: 34px;
+.bot-button p{
+  color: #1c1c1c;
+  padding-top: 13px;
+  padding-left: 10px;
+  padding-right: 5px;
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold;  
 }
 
-.help-button:hover {
-  background-color: rgba(114, 111, 111, 0.267);
+.logo {
+  height: auto;
+  width: 40px;
+  position: fixed;
+  bottom: 25px;
+  right: 27px;
+  border-radius: 13px;
+  cursor: pointer;
+}
+
+.bot-button.hovered {
+  display: block;
+  background-color: #ccc;
+  color: white;
   backdrop-filter: blur(5px);
-  transition: 0.2s;
+  cursor: pointer;
+  transition: opacity 2s ease;
 }

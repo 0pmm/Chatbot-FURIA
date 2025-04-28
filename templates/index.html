@@ -13,7 +13,6 @@
             <img class="img" src= "{{ url_for('static', filename='assets/Furia_Esports_logo.png') }}">   
             <h1>CHAT FURIA</h1>
 
-
             {% if response %}
             <div class="mensagem-bot">
                 <h4 id="bot-message">{{ response }}</h4>
@@ -21,14 +20,19 @@
             {% endif %}
 
             <div class="mensagem-user">
-                <form method="POST">
+                <!-- Corrigido aqui, utilizando a classe form-bot -->
+                <form class="form-bot" method="POST">
                     <textarea name="message" placeholder="Manda a call..." required></textarea>
                     <button type="submit"><i class='bx bx-chevrons-right'></i></button>
                 </form>
             </div>
     </div>
-        <button type="button" class="help-button"><i class='bx bx-help-circle'></i></button>
-        <script src="{{ url_for('static', filename='script/chat.js') }}"></script>
+
+    <div class="bot-button">
+        <p>Chat Furia</p>
+    </div>
+    <img class="logo" src= "{{ url_for('static', filename='assets/Furia_Esports_logo.png') }}">
+    
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
 </body>
 </html>
-  

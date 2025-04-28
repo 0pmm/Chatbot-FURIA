@@ -12,19 +12,19 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 with open('furia_info.json', 'r') as f:
     furia_data = json.load(f)
 
-# Formata os dados da FURIA para incluir na instrução do sistema
+# Corrigindo o nome da chave 'tkilss' para 'tkills'
 furia_context = f"""
 INFORMAÇÕES DA FURIA ESPORTS CSGO:
 Jogadores: {', '.join(furia_data['players'])}
 Títulos: {', '.join(furia_data['titles'])}
 Técnico: {furia_data['coach']}
-Últimas 5 Partidas: {furia_data['last5-matches']}
+Últimas 5 Partidas: {', '.join(furia_data['last5-matches'])}
 História: {furia_data['history']}
 Total de Mapas: {furia_data['tmaps']}
 Total de Vitórias: {furia_data['twins']}
 Total de Empates: {furia_data['tdraws']}
 Total de Perdas: {furia_data['tlosses']}
-Total de Kills: {furia_data['tkilss']}
+Total de Kills: {furia_data['tkills']}  # Corrigido para 'tkills'
 Total de Mortes: {furia_data['tdeaths']}
 Total de Partidas: {furia_data['trouds']}
 Média kill por mortes: {furia_data['kd']}
@@ -47,7 +47,8 @@ def index():
     if request.method == "POST":
         pergunta = request.form["message"]
         if pergunta:
-            response = model.generate_content(pergunta)
+            # Verifique se o método 'generate_content' está correto
+            response = model.generate_content(pergunta, generation_config={'temperature':0.5})
             resposta = response.text
     return render_template("index.html", response=resposta)
 
