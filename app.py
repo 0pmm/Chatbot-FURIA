@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
 import google.generativeai as genai
 import os
@@ -23,20 +23,23 @@ Total de Mapas: {furia_data['tmaps']}
 Total de Vitórias: {furia_data['twins']}
 Total de Empates: {furia_data['tdraws']}
 Total de Perdas: {furia_data['tlosses']}
-Total de Kills: {furia_data['tkills']}  # Corrigido para 'tkills'
+Total de Kills: {furia_data['tkills']}
 Total de Mortes: {furia_data['tdeaths']}
 Total de Partidas: {furia_data['trouds']}
 Média kill por mortes: {furia_data['kd']}
 """
 
-model = genai.GenerativeModel(
-    model_name="gemini-2.0-flash-lite",
-    system_instruction=f"""Você é um chatbot divertido da FURIA Esports e fanático por tal. Que deve servir como almanaque para o usuário, buscando o atualizar sobre jogos, feitos e dados da Equipe FURIA CSGO, de forma direta, sem textos enormes, cansativos e sem negrito, itálico e afins.
+historico_conversa = []
+MAX_CONTEXTO = 3
 
-    Utilize as seguintes informações sobre a FURIA para responder às perguntas do usuário, mantendo um contexto das perguntas anteriores se possível.
-    {furia_context}
-    """
-)
+model = genai.GenerativeModel(model_name="gemini-2.0-flash-lite")
+
+system_instruction_base = f"""Você é um chatbot divertido da FURIA Esports e fanático por tal. Que deve servir como guia para o usuário, buscando o atualizar sobre jogos, feitos e dados da Equipe FURIA CSGO, de forma direta, sem textos cansativos e sem negrito, itálico e afins.
+
+Utilize as seguintes informações sobre a FURIA para responder às perguntas do usuário, mantendo um contexto das conversas anteriores se possível. O histórico da conversa é:
+{{historico_contexto}}
+{furia_context}
+"""
 
 app = Flask(__name__)
 
@@ -46,11 +49,28 @@ def index():
 
 @app.route("/perguntar", methods=["POST"])
 def perguntar():
+    global historico_conversa
     pergunta = request.form["mensagem"]
+
     if pergunta:
-        response = model.generate_content(pergunta, generation_config={'temperature': 0.5})
+        historico_conversa.append({"role": "user", "content": pergunta})
+        while len(historico_conversa) > MAX_CONTEXTO * 2:  # Limita a 3 interações (pergunta+resposta)
+            historico_conversa.pop(0)
+
+        historico_contexto_str = "\n".join([f"{item['role']}: {item['content']}" for item in historico_conversa])
+        prompt_completo = system_instruction_base.format(historico_contexto=historico_contexto_str)
+
+        contents = [
+            {"role": "user", "parts": [prompt_completo]},
+            {"role": "user", "parts": [pergunta]}
+        ]
+
+        response = model.generate_content(contents, generation_config={'temperature': 0.5})
         resposta = response.text
-        return jsonify({"resposta": resposta})  
+
+        historico_conversa.append({"role": "model", "content": resposta})
+
+        return jsonify({"resposta": resposta})
     return jsonify({"erro": "Nenhuma mensagem recebida"}), 400
 
 if __name__ == "__main__":

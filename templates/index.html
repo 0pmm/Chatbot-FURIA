@@ -23,11 +23,12 @@
                     </form>
                 </div>
         </div>
-
-        <div class="bot-button">
-            <p>Chat Furia</p>
+        <div class="button">
+            <div class="bot-button">
+                <p>Chat Furia</p>
+            </div>
+            <img class="logo" src= "{{ url_for('static', filename='assets/Furia_Esports_logo.png') }}">
         </div>
-        <img class="logo" src= "{{ url_for('static', filename='assets/Furia_Esports_logo.png') }}">
         
         <script src="{{ url_for('static', filename='js/chat.js') }}" defer></script>
     </body>

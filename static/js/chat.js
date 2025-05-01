@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const botButton = document.querySelector('.bot-button');
   const logo = document.querySelector('.logo');
   const menu = document.querySelector('.container');
-  const botao = document.querySelector('.bot-button');
+  const botao = document.querySelector('.button');
   const formulario = document.querySelector('.form-bot');
   const botMessageContainer = document.querySelector('.mensagem-bot'); // Agora este será o container principal
   const textarea = document.querySelector('.mensagem-user textarea');
