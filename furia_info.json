@@ -11,6 +11,9 @@
         "ESL Pro League Season 12 - North America",
         "Dreamhack Masters Spring 2020 - North America"
     ],
+    "site": "https://furia.gg",
+    "twitter": "https://x.com/FURIA",
+    "instagram": "https://www.instagram.com/furia.apparel/",
     "coach": "Sid Macedo, famoso sidde",
     "last5-matches": [
         "Perdeu para o 0 MongolZ por 2x0",
@@ -19,7 +22,27 @@
         "Ganhou do Betclic por 2x0",
         "Perdeu para a M80 por 2x1"
     ],
-    "history": "A FURIA Esports foi fundada em 2017 e rapidamente se destacou no cenário internacional de CS:GO, com um estilo de jogo agressivo e inovador.",
+    "NextChamps": [
+        "PGL Astana 2025, de 10 de maio a 18 de maio",
+        "IEM Dallas 2025, de 19 de maio a 25 de maio",
+        "BLAST.tv Austin Major 2025 Stage 2, de 7 de junho a 10 de junho"
+    ],
+    "history": "FURIA é uma organização brasileira que atua nas modalidades de e-sports em Counter-Strike 2, Rocket League, League of Legends, Valorant, Rainbow Six: Siege, Apex Legends e Futebol de 7. Fundada em 2017, a FURIA possui o time de Counter-Strike que melhor desempenha nas competições internacionais mais recentes, sempre a frente nas colocações entre equipes do país",
+    "wrate":"59,48%",
+    "Wratemaps": [
+        "Cobblestone: 70,6%",
+        "Anubis: 44,4%",
+        "Dust2: 56,8%",
+        "Cache: 73,2%",
+        "Ancient: 51,5%",
+        "Train: 62,5%",
+        "Vertigo: 61,2%",
+        "Overpass: 60,3%",
+        "Nuke: 56,1%",
+        "Mirage: 60,8%",
+        "Inferno: 59,1%"
+    ],
+    "bestmajor": "Ficaram em 3° no IEM Rio Major em 2022",
     "tmaps": "1355",
     "twins": "806",
     "tdraws": "2",
@@ -27,5 +50,8 @@
     "tkills":"116894",
     "tdeaths": "109262",
     "trouds":"34181",
-    "kd":"1.07"
+    "kd":"1.07",
+    "valve-rank": "#19",
+    "world-rank": "#17",
+    "bestw-rank": "3ª posição, em junho de 2022."
 }

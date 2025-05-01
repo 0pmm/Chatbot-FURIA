@@ -27,6 +27,16 @@ Total de Kills: {furia_data['tkills']}
 Total de Mortes: {furia_data['tdeaths']}
 Total de Partidas: {furia_data['trouds']}
 Média kill por mortes: {furia_data['kd']}
+Site: {furia_data['site']}
+X: {furia_data['twitter']}
+Instagram: {furia_data['instagram']}
+Próximos Campeonatos: {furia_data['NextChamps']}
+Winrate Médiao: {furia_data['wrate']}
+Winrate por Mapa: {furia_data['Wratemaps']}
+Melhor Resultado em Major: {furia_data['bestmajor']}
+Ranking da Valve: {furia_data['valve-rank']}
+Ranking Mundial: {furia_data['world-rank']}
+Melhor posição no Ranking Mundial: {furia_data['bestw-rank']}
 """
 
 historico_conversa = []
