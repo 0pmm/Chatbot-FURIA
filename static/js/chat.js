@@ -1,13 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-
   const botButton = document.querySelector('.bot-button');
   const logo = document.querySelector('.logo');
   const menu = document.querySelector('.container');
   const botao = document.querySelector('.bot-button');
-  const formulario = document.querySelector('.form-bot'); // Seleciona o formulário com a classe 'form-bot'
-  const botMessage = document.getElementById('bot-message'); // Seleciona o local da resposta do bot
+  const formulario = document.querySelector('.form-bot');
+  const botMessageContainer = document.querySelector('.mensagem-bot'); // Agora este será o container principal
   const textarea = document.querySelector('.mensagem-user textarea');
-  const form = document.querySelector('.mensagem-user form');
 
   // Verifica se os elementos existem antes de associar eventos
   if (logo && botButton) {
@@ -49,65 +47,69 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-// Faz o Enter enviar e Ctrl+Enter quebrar linha
-if (textarea && formulario) {
-  textarea.addEventListener('keydown', function (event) {
-    if (event.key === 'Enter') {
-      if (event.ctrlKey) {
-        const cursorPos = textarea.selectionStart;
-        const value = textarea.value;
-        textarea.value = value.substring(0, cursorPos) + "\n" + value.substring(cursorPos);
-        textarea.selectionStart = textarea.selectionEnd = cursorPos + 1;
-        event.preventDefault();
-      } else {
-        event.preventDefault();
-        formulario.requestSubmit();
-        console.log('RequestSubmit() foi chamado!');
+
+  // Faz o Enter enviar e Ctrl+Enter quebrar linha
+  if (textarea && formulario) {
+    textarea.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        if (event.ctrlKey) {
+          const cursorPos = textarea.selectionStart;
+          const value = textarea.value;
+          textarea.value = value.substring(0, cursorPos) + "\n" + value.substring(cursorPos);
+          textarea.selectionStart = textarea.selectionEnd = cursorPos + 1;
+          event.preventDefault(); // Evita a quebra de linha padrão com Ctrl+Enter
+        } else {
+          event.preventDefault(); // Evita a quebra de linha padrão com Enter sozinho
+          formulario.requestSubmit();
+          console.log('RequestSubmit() foi chamado!');
+        }
       }
+    });
+  }
+
+  formulario.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    console.log('Formulário ENVIADO!');
+
+    const formData = new FormData(formulario);
+
+    // Limpa o container de mensagens do bot ANTES de exibir a nova resposta
+    botMessageContainer.innerHTML = '';
+
+    // Cria o container da resposta (com loader primeiro)
+    const botContainer = document.createElement('div');
+    botContainer.classList.add('bot-response');
+
+    const loader = document.createElement('div');
+    loader.classList.add('loader');
+    botContainer.appendChild(loader);
+
+    botMessageContainer.appendChild(botContainer); // Adiciona ao container principal
+    botMessageContainer.scrollTop = botMessageContainer.scrollHeight;
+
+    try {
+      const response = await fetch('/perguntar', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await response.json();
+
+      // Remove loader e adiciona resposta
+      botContainer.removeChild(loader);
+      const respostaTexto = document.createElement('div');
+      respostaTexto.classList.add('message-chat');
+      respostaTexto.innerText = data.resposta;
+      botContainer.appendChild(respostaTexto);
+
+      botMessageContainer.scrollTop = botMessageContainer.scrollHeight; // Scroll no container principal
+      formulario.reset();
+
+    } catch (error) {
+      console.error('Erro ao enviar mensagem:', error);
+      botMessageContainer.textContent = "Erro ao obter resposta."; // Feedback de erro
     }
   });
-}
-
-formulario.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  console.log('Formulário ENVIADO!'); // <--- Adiciona isso pra testar
-
-  const formData = new FormData(formulario);
-  const userMessage = formData.get('mensagem'); // Ajuste o nome conforme o seu input name
-
-  // Cria o container da resposta (com loader primeiro)
-  const botContainer = document.createElement('div');
-  botContainer.classList.add('bot-response');
-
-  const loader = document.createElement('div');
-  loader.classList.add('loader');
-  botContainer.appendChild(loader);
-
-  botMessage.appendChild(botContainer);  // Adiciona ao DOM
-  botMessage.scrollTop = botMessage.scrollHeight;
-
-  try {
-    const response = await fetch('/perguntar', {
-      method: 'POST',
-      body: formData
-    });
-
-    const data = await response.json();
-
-    // Remove loader e adiciona resposta
-    botContainer.removeChild(loader);
-    const respostaTexto = document.createElement('div');
-    respostaTexto.classList.add('message-chat');  // Estilo que você quiser
-    respostaTexto.innerText = data.resposta;
-    botContainer.appendChild(respostaTexto);
-
-    botMessage.scrollTop = botMessage.scrollHeight;
-    formulario.reset();
-
-  } catch (error) {
-    console.error('Erro ao enviar mensagem:', error);
-  }
-});
 
   // Faz o textarea crescer dinamicamente enquanto digita
   if (textarea) {
@@ -121,7 +123,7 @@ formulario.addEventListener('submit', async (event) => {
   // Função para a animação de digitação
   function typeMessage(message, element) {
     let index = 0;
-    element.style.visibility = 'visible';  // Torna o elemento visível apenas quando a animação começar
+    element.style.visibility = 'visible';
     let interval = setInterval(() => {
       if (index < message.length) {
         element.textContent += message[index];
@@ -129,30 +131,35 @@ formulario.addEventListener('submit', async (event) => {
       } else {
         clearInterval(interval);
       }
-    }, 45);  // A velocidade de digitação (100ms entre cada caractere)
+    }, 45);
   }
 
   // Função para mostrar a resposta do bot com animação
   function showBotResponse(response) {
-    const botElement = document.getElementById('bot-message');
+    const botElement = botMessageContainer; // Agora usa o container principal
     if (botElement) {
-      botElement.textContent = '';  // Limpar qualquer mensagem anterior
-      botElement.style.visibility = 'hidden';  // Inicialmente, o texto não é visível
-      typeMessage(response, botElement);  // Iniciar a animação de digitação
+      const respostaTexto = document.createElement('div');
+      respostaTexto.classList.add('message-chat');
+      respostaTexto.style.visibility = 'hidden'; // Inicialmente invisível para a animação
+      botElement.appendChild(respostaTexto);
+      typeMessage(response, respostaTexto);
+      botElement.scrollTop = botElement.scrollHeight;
     }
   }
 
   // Espera até que o conteúdo da página seja carregado
   window.onload = function () {
-    const botMessageElement = document.getElementById('bot-message');
-
-    // Se houver uma resposta do bot no HTML, aplica a animação
-    if (botMessageElement) {
-      const botMessage = botMessageElement.textContent;
-      botMessageElement.textContent = '';  // Limpa a mensagem antes de iniciar a animação
-      botMessageElement.style.visibility = 'hidden';  // Garante que a mensagem não aparece ainda
-      typeMessage(botMessage, botMessageElement);
+    // Se houver uma mensagem inicial renderizada no .mensagem-bot,
+    // você pode optar por animá-la aqui também, se desejar.
+    // Exemplo (se a mensagem inicial estiver diretamente dentro da div):
+    const primeiraMensagem = botMessageContainer.textContent.trim();
+    botMessageContainer.textContent = ''; // Limpa o conteúdo inicial
+    if (primeiraMensagem) {
+      const primeiraRespostaElement = document.createElement('div');
+      primeiraRespostaElement.classList.add('message-chat');
+      primeiraRespostaElement.style.visibility = 'hidden';
+      botMessageContainer.appendChild(primeiraRespostaElement);
+      typeMessage(primeiraMensagem, primeiraRespostaElement);
     }
   };
-
 });

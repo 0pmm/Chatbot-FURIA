@@ -1,37 +1,34 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FURIA</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-</head>
-<body>
-    <div class="container">
-            <img class="img" src= "{{ url_for('static', filename='assets/Furia_Esports_logo.png') }}">   
-            <h1>CHAT FURIA</h1>
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FURIA</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+                <img class="img" src= "{{ url_for('static', filename='assets/Furia_Esports_logo.png') }}">   
+                <h1>CHAT FURIA</h1>
 
-            {% if response %}
-            <div class="mensagem-bot">
-                <h4 id="bot-message">{{ response }}</h4>
-            </div>
-            {% endif %}
+                <div class="mensagem-bot">
+                </div>
 
-            <div class="mensagem-user">
-                <form class="form-bot" method="POST">
-                    <textarea name="mensagem" placeholder="Manda a call..." required></textarea>
-                    <button type="submit"><i class='bx bx-chevrons-right'></i></button>
-                </form>
-            </div>
-    </div>
+                <div class="mensagem-user">
+                    <form class="form-bot" method="POST">
+                        <textarea name="mensagem" placeholder="Manda a call..." required></textarea>
+                        <button type="submit"><i class='bx bx-chevrons-right'></i></button>
+                    </form>
+                </div>
+        </div>
 
-    <div class="bot-button">
-        <p>Chat Furia</p>
-    </div>
-    <img class="logo" src= "{{ url_for('static', filename='assets/Furia_Esports_logo.png') }}">
-    
-    <script src="{{ url_for('static', filename='js/chat.js') }}" defer></script>
-</body>
-</html>
+        <div class="bot-button">
+            <p>Chat Furia</p>
+        </div>
+        <img class="logo" src= "{{ url_for('static', filename='assets/Furia_Esports_logo.png') }}">
+        
+        <script src="{{ url_for('static', filename='js/chat.js') }}" defer></script>
+    </body>
+    </html>

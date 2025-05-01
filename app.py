@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify, session
 from dotenv import load_dotenv
 import google.generativeai as genai
 import os
@@ -12,7 +12,6 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 with open('furia_info.json', 'r') as f:
     furia_data = json.load(f)
 
-# Corrigindo o nome da chave 'tkilss' para 'tkills'
 furia_context = f"""
 INFORMAÇÕES DA FURIA ESPORTS CSGO:
 Jogadores: {', '.join(furia_data['players'])}
@@ -34,23 +33,25 @@ model = genai.GenerativeModel(
     model_name="gemini-2.0-flash-lite",
     system_instruction=f"""Você é um chatbot divertido da FURIA Esports e fanático por tal. Que deve servir como almanaque para o usuário, buscando o atualizar sobre jogos, feitos e dados da Equipe FURIA CSGO, de forma direta, sem textos enormes, cansativos e sem negrito, itálico e afins.
 
-    Utilize as seguintes informações sobre a FURIA para responder às perguntas do usuário:
+    Utilize as seguintes informações sobre a FURIA para responder às perguntas do usuário, mantendo um contexto das perguntas anteriores se possível.
     {furia_context}
     """
 )
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
 def index():
-    resposta = None
-    if request.method == "POST":
-        pergunta = request.form["message"]
-        if pergunta:
-            # Verifique se o método 'generate_content' está correto
-            response = model.generate_content(pergunta, generation_config={'temperature':0.5})
-            resposta = response.text
-    return render_template("index.html", response=resposta)
+    return render_template("index.html")
+
+@app.route("/perguntar", methods=["POST"])
+def perguntar():
+    pergunta = request.form["mensagem"]
+    if pergunta:
+        response = model.generate_content(pergunta, generation_config={'temperature': 0.5})
+        resposta = response.text
+        return jsonify({"resposta": resposta})  
+    return jsonify({"erro": "Nenhuma mensagem recebida"}), 400
 
 if __name__ == "__main__":
     print("Iniciando servidor Flask...")
