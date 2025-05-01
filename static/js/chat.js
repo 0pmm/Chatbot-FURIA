@@ -49,34 +49,65 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-
-  // Previne o comportamento padrão de recarregar a página ao enviar o formulário
-  if (formulario) {
-    formulario.addEventListener('submit', async (event) => {
-      event.preventDefault(); // Impede o reload da página
-
-      const formData = new FormData(formulario);
-
-      try {
-        const response = await fetch('/perguntar', {
-          method: 'POST',
-          body: formData
-        });
-
-        const data = await response.json();
-
-        // Atualiza a mensagem do bot sem recarregar
-        if (botMessage) {
-          botMessage.innerText = data.resposta;
-        }
-
-        // Limpa o campo do textarea
-        formulario.reset();
-      } catch (error) {
-        console.error('Erro ao enviar mensagem:', error);
+// Faz o Enter enviar e Ctrl+Enter quebrar linha
+if (textarea && formulario) {
+  textarea.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+      if (event.ctrlKey) {
+        const cursorPos = textarea.selectionStart;
+        const value = textarea.value;
+        textarea.value = value.substring(0, cursorPos) + "\n" + value.substring(cursorPos);
+        textarea.selectionStart = textarea.selectionEnd = cursorPos + 1;
+        event.preventDefault();
+      } else {
+        event.preventDefault();
+        formulario.requestSubmit();
+        console.log('RequestSubmit() foi chamado!');
       }
+    }
+  });
+}
+
+formulario.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  console.log('Formulário ENVIADO!'); // <--- Adiciona isso pra testar
+
+  const formData = new FormData(formulario);
+  const userMessage = formData.get('mensagem'); // Ajuste o nome conforme o seu input name
+
+  // Cria o container da resposta (com loader primeiro)
+  const botContainer = document.createElement('div');
+  botContainer.classList.add('bot-response');
+
+  const loader = document.createElement('div');
+  loader.classList.add('loader');
+  botContainer.appendChild(loader);
+
+  botMessage.appendChild(botContainer);  // Adiciona ao DOM
+  botMessage.scrollTop = botMessage.scrollHeight;
+
+  try {
+    const response = await fetch('/perguntar', {
+      method: 'POST',
+      body: formData
     });
+
+    const data = await response.json();
+
+    // Remove loader e adiciona resposta
+    botContainer.removeChild(loader);
+    const respostaTexto = document.createElement('div');
+    respostaTexto.classList.add('message-chat');  // Estilo que você quiser
+    respostaTexto.innerText = data.resposta;
+    botContainer.appendChild(respostaTexto);
+
+    botMessage.scrollTop = botMessage.scrollHeight;
+    formulario.reset();
+
+  } catch (error) {
+    console.error('Erro ao enviar mensagem:', error);
   }
+});
 
   // Faz o textarea crescer dinamicamente enquanto digita
   if (textarea) {
@@ -86,25 +117,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Faz o Enter enviar e Ctrl+Enter quebrar linha
-  if (textarea && form) {
-    textarea.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter') {
-        if (event.ctrlKey) {
-          // Se Ctrl+Enter, insere quebra de linha
-          const cursorPos = textarea.selectionStart;
-          const value = textarea.value;
-          textarea.value = value.substring(0, cursorPos) + "\n" + value.substring(cursorPos);
-          textarea.selectionStart = textarea.selectionEnd = cursorPos + 1;
-          event.preventDefault(); // impede o comportamento padrão
-        } else {
-          // Só Enter → envia o formulário
-          event.preventDefault();
-          form.submit();
-        }
-      }
-    });
-  }
 
   // Função para a animação de digitação
   function typeMessage(message, element) {

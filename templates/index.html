@@ -20,9 +20,8 @@
             {% endif %}
 
             <div class="mensagem-user">
-                <!-- Corrigido aqui, utilizando a classe form-bot -->
                 <form class="form-bot" method="POST">
-                    <textarea name="message" placeholder="Manda a call..." required></textarea>
+                    <textarea name="mensagem" placeholder="Manda a call..." required></textarea>
                     <button type="submit"><i class='bx bx-chevrons-right'></i></button>
                 </form>
             </div>
@@ -33,6 +32,6 @@
     </div>
     <img class="logo" src= "{{ url_for('static', filename='assets/Furia_Esports_logo.png') }}">
     
-    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chat.js') }}" defer></script>
 </body>
 </html>
