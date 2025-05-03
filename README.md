@@ -5,6 +5,7 @@ O **Chatbot FÚRIA** é uma aplicação leve e incorporável que simula uma conv
 O projeto é baseado na comunicação entre o backend em Python e o frontend, sendo o Python responsável por realizar as requisições à API da Gemini, utilizando o modelo gemini-2.0-flash-lite. O backend envia um contexto com instruções específicas para que a API atue como um guia de respostas sobre o time de CS2 da FURIA, incluindo as três últimas perguntas feitas pelo usuário para manter a coerência e o contexto das respostas. Além disso, o sistema interpreta dados e estatísticas armazenados em arquivos JSON para enriquecer as respostas.
 No frontend, ao clicar no botão com o logotipo da FURIA localizado no canto inferior direito, é exibido o menu de conversação. Quando uma pergunta é enviada — seja ao clicar no botão de envio ou pressionar Enter — ela é transmitida ao backend via método POST. Assim que a resposta é recebida, ela é inserida em uma nova div criada dinamicamente pelo JavaScript, permitindo que as mensagens sejam atualizadas de forma direta e dinâmica, proporcionando uma experiência fluida ao usuário.
 No momento está hospedado em um plano gratuito no render, portanto após a inatividade ele entra em modo sleep, e quando houver um novo acesso, até q ocorra sua ativação, decorre alguns minutos, todavia funciona totalmente como esperado!
+**Todas as estatisticas e informações sobre o time de CSGO da FURIA foram retiradas do site HLTV - https://www.hltv.org/team/8297/furia#tab-achievementsBox**
 
 ---
 
