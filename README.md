@@ -34,10 +34,12 @@ raiz/
 ├── templates/
 │   └── index.html       # Página principal com o botão e interface do chat
 ├── app.py               # Backend com Flask
+├── chatbot.py           # Lógica dos inputs e outputs dos prompts realizados ao gemini
+├── data.py              # Lógica que trabalha com os dados retirados do site HLTV
+├── furia_info.json      # Onde estão os dados retirados do site HLTV
+├── poetry.lock          # Organização em poetry  
+├── pyproject.toml       
 ├── .env                 # Variável de ambiente com a chave da API Gemini
-├── requirements.txt     # Lista de dependências Python
-├── Procfile             # Documento para deploy no Render
-├── runtime.exe          # Documento para deploy no Render
 └── README.md            # Documentação completa
 ```
 
